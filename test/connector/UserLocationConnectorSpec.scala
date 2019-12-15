@@ -20,8 +20,9 @@ class UserLocationConnectorSpec extends WireMockServerHelper
 
     "called for user list defined by DWP" must {
 
-      "return 200" in {
+      "return user list when 200 and for mime tye application json" in {
         stubFor(get(urlEqualTo(path))
+          .withHeader("Content-Type", equalTo("application/json"))
           .willReturn(
             ok(Json.parse("""[{
                              |    "id": 1,
@@ -33,6 +34,7 @@ class UserLocationConnectorSpec extends WireMockServerHelper
                              |    "longitude": -117.7228641
                              |  }]""".stripMargin
             ).toString())
+              .withHeader("Content-Type", "application/json")
           )
         )
 

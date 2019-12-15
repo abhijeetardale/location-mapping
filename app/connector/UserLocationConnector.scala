@@ -1,6 +1,7 @@
 package connector
 
 import config.AppConfig
+import exceptions.{BadGatewayException, BadRequestException, InternalServerException, NotFoundException, NotImplementedException, ServiceUnavailableException, UnrecognisedHttpResponseException}
 import javax.inject.Inject
 import play.api.libs.json.JsValue
 import play.api.http.Status._
@@ -20,7 +21,13 @@ class UserLocationConnector@Inject()(wsClient: WSClient, appConfig: AppConfig) {
      response =>
         response.status match{
           case OK => Right(response.json)
-          case _ => Left(throw new Exception(response.body))
+          case BAD_REQUEST => Left(throw new BadRequestException(response.body))
+          case NOT_FOUND => Left(throw new NotFoundException(response.body))
+          case INTERNAL_SERVER_ERROR => Left(throw new InternalServerException(response.body))
+          case NOT_IMPLEMENTED => Left(throw new NotImplementedException(response.body))
+          case BAD_GATEWAY => Left(throw new BadGatewayException(response.body))
+          case SERVICE_UNAVAILABLE => Left(throw new ServiceUnavailableException(response.body))
+          case _ => Left(throw new UnrecognisedHttpResponseException("getUsers", serviceUrl, response))
         }
     }
 

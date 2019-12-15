@@ -47,6 +47,29 @@ class UserLocationConnectorSpec extends WireMockServerHelper
         )
       }
 
+      "throw BadRequestException when status is 200 and response json is invalid" in {
+        stubFor(get(urlEqualTo(path))
+          .withHeader("Content-Type", equalTo("application/json"))
+          .willReturn(
+            ok(Json.parse(
+              """[{
+                |    "id": 1,
+                |    "first_name": "Maurise",
+                |    "last_name": "Shieldon",
+                |    "longitude": -117.7228641
+                |  }]""".stripMargin
+            ).toString())
+              .withHeader("Content-Type", "application/json")
+          )
+        )
+
+        val result = Await.result(inject[UserLocationConnector].getUsers, Duration.Inf)
+
+        result mustBe Right(Json.toJson(List(
+          User(1, "Maurise", "Shieldon", "mshieldon0@squidoo.com", "192.57.232.111", 34.003135, -117.7228641)))
+        )
+      }
+
 
       "throw BadRequestException if status is 400" in {
 

@@ -23,7 +23,7 @@ class UserLocationConnectorSpec extends WireMockServerHelper
       "return 200" in {
         stubFor(get(urlEqualTo(path))
           .willReturn(
-            ok(Json.parse("""{
+            ok(Json.parse("""[{
                              |    "id": 1,
                              |    "first_name": "Maurise",
                              |    "last_name": "Shieldon",
@@ -31,15 +31,15 @@ class UserLocationConnectorSpec extends WireMockServerHelper
                              |    "ip_address": "192.57.232.111",
                              |    "latitude": 34.003135,
                              |    "longitude": -117.7228641
-                             |  }""".stripMargin
+                             |  }]""".stripMargin
             ).toString())
           )
         )
 
         val result = Await.result(inject[UserLocationConnector].getUsers, Duration.Inf)
 
-        result mustBe Json.toJson(
-          User(1, "Maurise", "Shieldon", "mshieldon0@squidoo.com", "192.57.232.111", 34.003135, -117.7228641)
+        result mustBe Json.toJson(List(
+          User(1, "Maurise", "Shieldon", "mshieldon0@squidoo.com", "192.57.232.111", 34.003135, -117.7228641))
         )
       }
     }

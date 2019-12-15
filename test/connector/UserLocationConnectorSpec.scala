@@ -22,7 +22,7 @@ class UserLocationConnectorSpec extends WireMockServerHelper
       "return 200" in {
         stubFor(get(urlEqualTo(path))
           .willReturn(
-            ok(Json.toJson("""{
+            ok(Json.parse("""{
                              |    "id": 1,
                              |    "first_name": "Maurise",
                              |    "last_name": "Shieldon",

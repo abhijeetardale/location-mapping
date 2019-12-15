@@ -42,8 +42,8 @@ class UserLocationConnectorSpec extends WireMockServerHelper
 
         val result = Await.result(inject[UserLocationConnector].getUsers, Duration.Inf)
 
-        result mustBe Right(Json.toJson(List(
-          User(1, "Maurise", "Shieldon", "mshieldon0@squidoo.com", "192.57.232.111", 34.003135, -117.7228641)))
+        result mustBe Right(List(
+          User(1, "Maurise", "Shieldon", "mshieldon0@squidoo.com", "192.57.232.111", 34.003135, -117.7228641))
         )
       }
 

@@ -14,7 +14,7 @@ import scala.concurrent.Future
 
 class UserLocationConnector@Inject()(wsClient: WSClient, appConfig: AppConfig) {
 
-  def getUsers: Future[Either[Throwable, JsValue]] = {
+  def getUsers: Future[Either[Throwable, List[User]]] = {
     
     val serviceUrl = s"${appConfig.base}/users"
 
@@ -26,7 +26,7 @@ class UserLocationConnector@Inject()(wsClient: WSClient, appConfig: AppConfig) {
               s"$getUsers to $serviceUrl returned invalid JSON" +
                 JsResultException(error).getMessage
             )),
-            _ => Right(response.json)
+            valid => Right(valid)
           )
           case BAD_REQUEST => Left(throw new BadRequestException(response.body))
           case NOT_FOUND => Left(throw new NotFoundException(response.body))

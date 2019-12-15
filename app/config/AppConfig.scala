@@ -1,7 +1,10 @@
 package config
 
-object AppConfig {
+import javax.inject.Inject
+import play.api.{Configuration, Environment}
 
-  def base: String = ???
+class AppConfig@Inject()(runModeConfiguration: Configuration, environment: Environment) {
+
+  lazy val base: String= runModeConfiguration.get[String]("locationService.base")
 
 }

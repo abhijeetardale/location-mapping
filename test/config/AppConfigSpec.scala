@@ -3,9 +3,15 @@ package config
 import org.scalatest.MustMatchers
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.{Configuration, Environment}
 import play.api.test.Injecting
 
 class AppConfigSpec extends PlaySpec with GuiceOneAppPerSuite with MustMatchers with Injecting {
+
+  private val config = inject[Configuration]
+  private val environment = inject[Environment]
+
+  val appConfig = new AppConfig(config, environment)
 
   "AppConfig" when {
 
@@ -13,7 +19,7 @@ class AppConfigSpec extends PlaySpec with GuiceOneAppPerSuite with MustMatchers 
 
       "return the configured base url" in {
 
-        AppConfig.base mustBe "https://bpdts-test-app.herokuapp.com"
+        appConfig.base mustBe "https://bpdts-test-app.herokuapp.com"
 
       }
     }

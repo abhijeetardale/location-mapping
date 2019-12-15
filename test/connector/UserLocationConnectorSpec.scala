@@ -1,6 +1,7 @@
 package connector
 
 import com.github.tomakehurst.wiremock.client.WireMock.{badRequest, equalTo, get, ok, stubFor, urlEqualTo}
+import exceptions.BadRequestException
 import models.User
 import org.scalatest.{EitherValues, OptionValues, RecoverMethods}
 import play.api.libs.json.Json
@@ -55,7 +56,7 @@ class UserLocationConnectorSpec extends WireMockServerHelper
           )
         )
 
-        intercept[Exception](Await.result(inject[UserLocationConnector].getUsers, Duration.Inf))
+        intercept[BadRequestException](Await.result(inject[UserLocationConnector].getUsers, Duration.Inf))
           .getMessage mustBe "Bad Request"
 
       }

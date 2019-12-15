@@ -1,6 +1,7 @@
 package connector
 
 import com.github.tomakehurst.wiremock.client.WireMock.{equalTo, get, ok, stubFor, urlEqualTo}
+import models.User
 import org.scalatest.{EitherValues, OptionValues, RecoverMethods}
 import play.api.libs.json.Json
 import testutils.WireMockServerHelper
@@ -37,15 +38,8 @@ class UserLocationConnectorSpec extends WireMockServerHelper
 
         val result = Await.result(inject[UserLocationConnector].getUsers, Duration.Inf)
 
-        result.json mustBe Json.parse("""{
-                                        |    "id": 1,
-                                        |    "first_name": "Maurise",
-                                        |    "last_name": "Shieldon",
-                                        |    "email": "mshieldon0@squidoo.com",
-                                        |    "ip_address": "192.57.232.111",
-                                        |    "latitude": 34.003135,
-                                        |    "longitude": -117.7228641
-                                        |  }""".stripMargin)
+        result.json mustBe Json.toJson(
+          User(1, "Maurise", "Shieldon", "mshieldon0@squidoo.com", "192.57.232.111", 34.003135, -117.7228641))
       }
     }
   }

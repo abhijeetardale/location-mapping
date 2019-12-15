@@ -28,7 +28,7 @@ class UserLocationConnectorSpec extends WireMockServerHelper
 
         val result = Await.result(inject[UserLocationConnector].getUsers, Duration.Inf)
 
-        result mustBe Json.toJson("""{ [ "id" : "1" ]}""")
+        result.json mustBe Json.toJson("""{ [ "id" : "1" ]}""")
       }
     }
   }

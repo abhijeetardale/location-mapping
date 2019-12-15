@@ -3,7 +3,8 @@ package connector
 import config.AppConfig
 import exceptions.{BadGatewayException, BadRequestException, InternalServerException, NotFoundException, NotImplementedException, ServiceUnavailableException, UnrecognisedHttpResponseException}
 import javax.inject.Inject
-import play.api.libs.json.JsValue
+import models.User
+import play.api.libs.json.{JsResultException, JsValue}
 import play.api.http.Status._
 import play.api.http.MimeTypes.JSON
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -20,7 +21,13 @@ class UserLocationConnector@Inject()(wsClient: WSClient, appConfig: AppConfig) {
     wsClient.url(serviceUrl).addHttpHeaders("Content-Type" -> JSON).get().map{
      response =>
         response.status match{
-          case OK => Right(response.json)
+          case OK => response.json.validate[List[User]].fold(
+            error => Left(throw new BadRequestException(
+              s"$getUsers to $serviceUrl returned invalid JSON" +
+                JsResultException(error).getMessage
+            )),
+            _ => Right(response.json)
+          )
           case BAD_REQUEST => Left(throw new BadRequestException(response.body))
           case NOT_FOUND => Left(throw new NotFoundException(response.body))
           case INTERNAL_SERVER_ERROR => Left(throw new InternalServerException(response.body))

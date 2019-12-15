@@ -1,6 +1,6 @@
 package connector
 
-import com.github.tomakehurst.wiremock.client.WireMock.{equalTo, get, ok, stubFor, urlEqualTo}
+import com.github.tomakehurst.wiremock.client.WireMock.{badRequest, equalTo, get, ok, stubFor, urlEqualTo}
 import models.User
 import org.scalatest.{EitherValues, OptionValues, RecoverMethods}
 import play.api.libs.json.Json
@@ -40,10 +40,26 @@ class UserLocationConnectorSpec extends WireMockServerHelper
 
         val result = Await.result(inject[UserLocationConnector].getUsers, Duration.Inf)
 
-        result mustBe Json.toJson(List(
-          User(1, "Maurise", "Shieldon", "mshieldon0@squidoo.com", "192.57.232.111", 34.003135, -117.7228641))
+        result mustBe Right(Json.toJson(List(
+          User(1, "Maurise", "Shieldon", "mshieldon0@squidoo.com", "192.57.232.111", 34.003135, -117.7228641)))
         )
       }
+
+
+      "throw exception if status is not 200" in {
+
+        stubFor(get(urlEqualTo(path))
+          .withHeader("Content-Type", equalTo("application/json"))
+          .willReturn(
+            badRequest().withBody("Bad Request")
+          )
+        )
+
+        intercept[Exception](Await.result(inject[UserLocationConnector].getUsers, Duration.Inf))
+          .getMessage mustBe "Bad Request"
+
+      }
+
     }
   }
 }

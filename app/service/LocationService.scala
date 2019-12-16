@@ -1,6 +1,7 @@
 package service
 
 import config.AppConfig
+import javax.inject.Inject
 import models.User
 
 //The haversine formula determines the great-circle distance between two points on a sphere given their
@@ -12,7 +13,7 @@ import models.User
 //a = sin²(Δlat/2) + cos(lat1) * cos(lat2) * sin²(Δlong/2)
 //c = 2*atan2(√a, √(1−a)); d = R*c
 
-class LocationService(appConfig: AppConfig) {
+class LocationService@Inject()(appConfig: AppConfig) {
 
   def locate(user: User): Boolean = {
 

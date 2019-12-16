@@ -14,7 +14,7 @@ import scala.concurrent.Future
 
 class UserLocationConnector@Inject()(wsClient: WSClient, appConfig: AppConfig) {
 
-  def getUsers: Future[Either[Throwable, List[User]]] = {
+  def getUsers: Future[Either[Exception, List[User]]] = {
     
     val serviceUrl = s"${appConfig.base}${appConfig.users}"
 

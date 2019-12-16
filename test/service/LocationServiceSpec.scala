@@ -1,5 +1,6 @@
 package service
 
+import config.AppConfig
 import models.User
 import org.scalatest.MustMatchers
 import org.scalatestplus.play.PlaySpec
@@ -8,7 +9,8 @@ import play.api.test.Injecting
 
 class LocationServiceSpec extends PlaySpec with GuiceOneAppPerSuite with MustMatchers with Injecting {
 
-  val service = new LocationService()
+  val service = new LocationService(inject[AppConfig])
+
   val userLondon = User(1, "Maurise", "Shieldon", "mshieldon0@squidoo.com", "192.57.232.111", 51.50853, -0.12574)
   val userLondon25Mile = User(2, "Bendix", "Halgarth", "bhalgarth1@timesonline.co.u", "4.185.73.82", 51.803615, 0.137487)
   val userLondon50Mile = User(3, "Meghan", "Southall", "msouthall2@ihg.com", "21.243.184.21", 51.17894000, -1.07006000)

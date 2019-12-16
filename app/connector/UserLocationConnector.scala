@@ -16,7 +16,7 @@ class UserLocationConnector@Inject()(wsClient: WSClient, appConfig: AppConfig) {
 
   def getUsers: Future[Either[Throwable, List[User]]] = {
     
-    val serviceUrl = s"${appConfig.base}/users"
+    val serviceUrl = s"${appConfig.base}${appConfig.users}"
 
     wsClient.url(serviceUrl).addHttpHeaders("Content-Type" -> JSON).get().map{
      response =>

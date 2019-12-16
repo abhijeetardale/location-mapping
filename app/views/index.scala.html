@@ -2,4 +2,18 @@
 
 @main("Welcome to Play") {
   <h1>Welcome to Play!</h1>
+  <table style="width:100%">
+    <tr>
+      <th>id</th>
+      <th>Firstname</th>
+      <th>Lastname</th>
+    </tr>
+    @for( u -> users){
+      <tr>
+        <td>@{u.id}</td>
+        <td>@{u.first_name}</td>
+        <td>@{u.last_name}</td>
+      </tr>
+    }
+  </table>
 }

@@ -20,16 +20,16 @@ class LocationServiceSpec extends PlaySpec with GuiceOneAppPerSuite with MustMat
 
     "called with user coordinate" must{
 
-     "return false if distance is 0 mile away from London" in {
-       service.locate(userLondon) mustBe false
+     "return true if distance is 0 mile away from London" in {
+       service.locate(userLondon) mustBe true
      }
 
-     "return false if distance is 25 mile away from London" in {
-       service.locate(userLondon25Mile) mustBe false
+     "return true if distance is 25 mile away from London" in {
+       service.locate(userLondon25Mile) mustBe true
      }
 
-     "return false if distance is exact 50 miles away from London" in {
-       service.locate(userLondon50Mile) mustBe false
+     "return true if distance is exact 50 miles away from London" in {
+       service.locate(userLondon50Mile) mustBe true
      }
 
      "return true if distance is more than 50 miles away from London" in {
@@ -41,14 +41,22 @@ class LocationServiceSpec extends PlaySpec with GuiceOneAppPerSuite with MustMat
 
   "called with list of user" must{
 
-    "return empty list when all the address are wthinin the range" in {
+    "return empty list when all the address are wthin the range" in {
 
-      service.filterUser(List(userLondon, userLondon25Mile, userLondon50Mile)) mustBe List.empty
+      service.filterUser(List(userLondon, userLondon25Mile, userLondon50Mile)) mustBe List(
+        userLondon, userLondon25Mile, userLondon50Mile)
+    }
+
+    "return empty list when all the address are wthin the range" in {
+
+      service.filterUser(List(userLondon, userLondon25Mile, userLondon50Mile)) mustBe List(
+        userLondon, userLondon25Mile, userLondon50Mile)
     }
 
     "return list of users when all the address are not in range" in {
 
-      service.filterUser(List(userLondon, userLondon25Mile, userLondon50Mile, userLondonMoreThan50Mile)) mustBe List(userLondonMoreThan50Mile)
+      service.filterUser(List(userLondon, userLondon25Mile, userLondon50Mile, userLondonMoreThan50Mile)) mustBe List(
+        userLondon, userLondon25Mile, userLondon50Mile)
     }
 
   }

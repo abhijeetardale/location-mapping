@@ -18,7 +18,9 @@ class HomeController @Inject()(
     userLocationConnector.getUsers.map{ response =>
       response.fold(
         _ =>  Redirect(routes.ErrorController.error()),
-        _ => Ok(views.html.index(List.empty))
+        results => {
+          Ok(views.html.index(locationService.filterUser(results)))
+        }
       )
     }
 

@@ -30,12 +30,12 @@ class LocationService@Inject()(appConfig: AppConfig) {
 
     val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
-    (appConfig.earthRadiusInMiles * c).round >= appConfig.rangeInMile
+    (appConfig.earthRadiusInMiles * c).round <= appConfig.rangeInMile
   }
 
 
   def filterUser(users: List[User]): List[User] = {
-    users.filter(locate)
+    users.filter(locate(_))
   }
 
 }

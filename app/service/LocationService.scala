@@ -12,7 +12,6 @@ import models.User
 //c = 2*atan2(√a, √(1−a)); d = R*c
 
 class LocationService() {
-
   private val londonLatitude: Double = 51.50853
   private val londonLongitude: Double = -0.12574
   private val EarthRadiusInMiles: Double = 3959.87433
@@ -34,5 +33,8 @@ class LocationService() {
 
     (EarthRadiusInMiles * c).round <= 50
   }
+
+
+  def filterUser(users: List[User]): List[User] = ???
 
 }

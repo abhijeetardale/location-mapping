@@ -1,13 +1,13 @@
 package connector
 
 import config.AppConfig
-import exceptions.{BadGatewayException, BadRequestException, InternalServerException, NotFoundException, NotImplementedException, ServiceUnavailableException, UnrecognisedHttpResponseException}
+import exceptions._
 import javax.inject.Inject
 import models.User
-import play.api.libs.json.{JsResultException, JsValue}
-import play.api.http.Status._
 import play.api.http.MimeTypes.JSON
-import play.api.libs.ws.{WSClient, WSResponse}
+import play.api.http.Status._
+import play.api.libs.json.JsResultException
+import play.api.libs.ws.WSClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

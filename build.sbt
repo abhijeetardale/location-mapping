@@ -4,7 +4,7 @@ name := """location-mapping"""
 
 version := "1.0-SNAPSHOT"
 
-val compile = Seq(ws)
+val compile = Seq(ws, guice)
 
 val test = Seq(
   "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % Test,

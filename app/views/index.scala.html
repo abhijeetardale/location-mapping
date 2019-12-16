@@ -1,7 +1,7 @@
 @(users:List[models.User])
 
 @main("Welcome to Play") {
-  <h1>Welcome to Play! @users</h1>
+  <h1>Welcome to Play!</h1>
   <table style="width:100%">
     <tr>
       <th>id</th>
@@ -11,8 +11,8 @@
     @for(u <- users){
       <tr>
         <td>@{u.id}</td>
-        <td>@{u.first_name}</td>
-        <td>@{u.last_name}</td>
+        <td>@{u.firstName}</td>
+        <td>@{u.lastName}</td>
       </tr>
     }
   </table>

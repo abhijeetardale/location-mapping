@@ -47,6 +47,32 @@ class UserLocationConnectorSpec extends WireMockServerHelper
         )
       }
 
+      "return user list when 200 and for mime tye application json and latitude and longitude in string format" in {
+        stubFor(get(urlEqualTo(path))
+          .withHeader("Content-Type", equalTo("application/json"))
+          .willReturn(
+            ok(Json.parse(
+              """[{
+                |    "id": 1,
+                |    "first_name": "Maurise",
+                |    "last_name": "Shieldon",
+                |    "email": "mshieldon0@squidoo.com",
+                |    "ip_address": "192.57.232.111",
+                |    "latitude": "34.003135",
+                |    "longitude": "-117.7228641"
+                |  }]""".stripMargin
+            ).toString())
+              .withHeader("Content-Type", "application/json")
+          )
+        )
+
+        val result = Await.result(inject[UserLocationConnector].getUsers, Duration.Inf)
+
+        result mustBe Right(List(
+          User(1, "Maurise", "Shieldon", "mshieldon0@squidoo.com", "192.57.232.111", 34.003135, -117.7228641))
+        )
+      }
+
       "throw BadRequestException when status is 200 and response json is invalid" in {
         stubFor(get(urlEqualTo(path))
           .withHeader("Content-Type", equalTo("application/json"))

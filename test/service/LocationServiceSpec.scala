@@ -32,8 +32,8 @@ class LocationServiceSpec extends PlaySpec with GuiceOneAppPerSuite with MustMat
        service.locate(userLondon50Mile) mustBe true
      }
 
-     "return true if distance is more than 50 miles away from London" in {
-       service.locate(userLondonMoreThan50Mile) mustBe true
+     "return false if distance is more than 50 miles away from London" in {
+       service.locate(userLondonMoreThan50Mile) mustBe false
      }
 
     }
@@ -41,22 +41,21 @@ class LocationServiceSpec extends PlaySpec with GuiceOneAppPerSuite with MustMat
 
   "called with list of user" must{
 
-    "return empty list when all the address are wthin the range" in {
+    "return user list when all the address are wthin the range" in {
 
       service.filterUser(List(userLondon, userLondon25Mile, userLondon50Mile)) mustBe List(
         userLondon, userLondon25Mile, userLondon50Mile)
     }
 
-    "return empty list when all the address are wthin the range" in {
+    "return list of users excluding the address which is not in range" in {
 
-      service.filterUser(List(userLondon, userLondon25Mile, userLondon50Mile)) mustBe List(
+      service.filterUser(List(userLondon, userLondon25Mile, userLondon50Mile, userLondonMoreThan50Mile, userLondonMoreThan50Mile)) mustBe List(
         userLondon, userLondon25Mile, userLondon50Mile)
     }
 
-    "return list of users when all the address are not in range" in {
+    "return empty user list when the address which is not in range" in {
 
-      service.filterUser(List(userLondon, userLondon25Mile, userLondon50Mile, userLondonMoreThan50Mile)) mustBe List(
-        userLondon, userLondon25Mile, userLondon50Mile)
+      service.filterUser(List(userLondonMoreThan50Mile)) mustBe List.empty
     }
 
   }

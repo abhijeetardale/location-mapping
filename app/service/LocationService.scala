@@ -34,8 +34,8 @@ class LocationService@Inject()(appConfig: AppConfig) {
   }
 
 
-  def filterUser(users: List[User]): List[User] = {
-    users.filter(locate(_))
+  def filterUser(users: Seq[User]): List[User] = {
+    users.filter(locate(_)).toList
   }
 
 }

@@ -1,9 +1,11 @@
 package controllers
 
+import com.github.tomakehurst.wiremock.client.WireMock
 import connector.UserLocationConnector
 import exceptions.InternalServerException
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
+import org.scalatest.{BeforeAndAfter, BeforeAndAfterEach}
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
 import play.api.test._
@@ -12,11 +14,13 @@ import service.LocationService
 
 import scala.concurrent.Future
 
-class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar with BeforeAndAfterEach {
 
+  override def beforeEach(): Unit = reset(mockUserLocationConnector)
+
+  val mockUserLocationConnector = mock[UserLocationConnector]
+  
   "HomeController GET" should {
-
-    val mockUserLocationConnector = mock[UserLocationConnector]
 
     "render the index page without users and connector invoked" in {
 

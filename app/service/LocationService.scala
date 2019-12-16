@@ -31,12 +31,12 @@ class LocationService() {
 
     val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
-    (EarthRadiusInMiles * c).round <= 50
+    (EarthRadiusInMiles * c).round >= 50
   }
 
 
   def filterUser(users: List[User]): List[User] = {
-    users.filter(!locate(_))
+    users.filter(locate(_))
   }
 
 }

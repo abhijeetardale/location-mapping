@@ -18,20 +18,20 @@ class LocationServiceSpec extends PlaySpec with GuiceOneAppPerSuite with MustMat
 
     "called with user coordinate" must{
 
-     "return true if distance is 0 mile away from London" in {
-       service.locate(userLondon) mustBe true
+     "return false if distance is 0 mile away from London" in {
+       service.locate(userLondon) mustBe false
      }
 
-     "return true if distance is 25 mile away from London" in {
-       service.locate(userLondon25Mile) mustBe true
+     "return false if distance is 25 mile away from London" in {
+       service.locate(userLondon25Mile) mustBe false
      }
 
-     "return true if distance is exact 50 miles away from London" in {
-       service.locate(userLondon50Mile) mustBe true
+     "return false if distance is exact 50 miles away from London" in {
+       service.locate(userLondon50Mile) mustBe false
      }
 
-     "return false if distance is more than 50 miles away from London" in {
-       service.locate(userLondonMoreThan50Mile) mustBe false
+     "return true if distance is more than 50 miles away from London" in {
+       service.locate(userLondonMoreThan50Mile) mustBe true
      }
 
     }

@@ -40,7 +40,7 @@ class LocationServiceSpec extends PlaySpec with GuiceOneAppPerSuite with MustMat
   "called with list of user" must{
 
     "return empty list when all the addess are in range" in {
-      
+
       service.filterUser(List(userLondon, userLondon25Mile, userLondon50Mile)) mustBe List.empty
     }
 

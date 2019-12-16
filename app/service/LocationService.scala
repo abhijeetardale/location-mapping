@@ -35,6 +35,8 @@ class LocationService() {
   }
 
 
-  def filterUser(users: List[User]): List[User] = ???
+  def filterUser(users: List[User]): List[User] = {
+    users.filter(!locate(_))
+  }
 
 }

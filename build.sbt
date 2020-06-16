@@ -1,4 +1,5 @@
 import play.sbt.PlayImport._
+import scoverage.ScoverageKeys
 
 name := """location-mapping"""
 
@@ -19,6 +20,13 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
     parallelExecution in Test := false,
     fork in Test := false,
     retrieveManaged := true,
-    scalaVersion := "2.11.12"
+    scalaVersion := "2.11.12",
+    PlayKeys.playDefaultPort := 9000,
+    ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*BuildInfo.*;.*javascript.*;.*Routes.*;.*GuiceInjector;",
+    ScoverageKeys.coverageMinimum := 80,
+    ScoverageKeys.coverageFailOnMinimum := true,
+    ScoverageKeys.coverageHighlighting := true,
+    scalacOptions ++= Seq("-feature","-Xlint:-unused")
   )
+
 

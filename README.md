@@ -12,11 +12,15 @@ Test coverage report:
 scoverage plugin is used to calculate unit test coverage which can be verified by executing./testCoverage.sh
 
 The latest coverage report is as follows:
+
 [info] Statement coverage.: 97.13%
+
 [info] Branch coverage....: 100.00%
+
 [info] Coverage is above minimum [97.13% > 80.0%]
 
 
 Reference:
 http://www.arubin.org/files/geo_search.pdf
+
 https://www.movable-type.co.uk/scripts/latlong.html
